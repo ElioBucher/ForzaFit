@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>ForzaFit</title>
+  <link rel="icon" href="favicon.ico">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navigation">
+    <div class="nav-left">
+      <img class="nav-logo" src="assets/AppIcon-removebg-preview.png" alt="ForzaFit Logo">
+      <div class="links">
+        <button class="nav-link" data-target="view-workout">Workout starten</button>
+        <button class="nav-link" data-target="view-plans">Trainingspläne</button>
+        <button class="nav-link" data-target="view-stats">Statistiken</button>
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn nav-link" data-target="view-auth" id="btn-login">Anmelden</button>
+      <button class="nav-btn nav-link" data-target="view-register" id="btn-register">Registrieren</button>
+      <button class="nav-btn" id="btn-profile" style="display:none;"></button>
+      <button class="nav-btn" id="btn-logout" style="display:none;">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Landing -->
+  <section id="view-landing" class="view view-active">
+    <div class="landing">
+      <div class="landing-text">
+        <h1>ForzaFit</h1>
+        <p>Tracke deine Workouts, erstelle Trainingspläne und verfolge deinen Fortschritt!</p>
+        <div class="landing-actions">
+          <button class="landing-link nav-link" id="landing-start-btn" data-target="view-workout">Jetzt starten</button>
+        </div>
+      </div>
+      <div class="landing-card">
+        <h2>Deine Vorteile</h2>
+        <ul>
+          <li>Individuelle Trainingspläne speichern</li>
+          <li>Workouts live abhaken</li>
+          <li>Statistiken und Muskelgruppen-Übersicht</li>
+          <li>Vollkommen gratis!</li>
+        </ul>
+      </div>
+      <video class="landing-video" controls autoplay muted loop>
+        <source src="assets/Trailer_ForzaFit.mp4" type="video/mp4">
+      </video>
+
+    </div>
+  </section>
+
+  <!-- Login -->
+  <section class="view" id="view-auth">
+    <div class="card">
+      <h2>Login</h2>
+      <p>Melde dich an, um deine Trainingsdaten zu speichern.</p>
+      <div class="input">
+        <label for="login-username">Benutzername</label>
+        <input id="login-username" placeholder="Dein Benutzername" />
+      </div>
+      <div class="input">
+        <label for="login-password">Passwort</label>
+        <input id="login-password" type="password" placeholder="Dein Passwort" />
+      </div>
+      <div class="row mt">
+        <button id="login-btn">Einloggen</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Register -->
+  <section class="view" id="view-register">
+    <div class="card">
+      <h2>Registrieren</h2>
+      <p>Registriere dich, um deine Trainingsdaten zu speichern.</p>
+      <div class="input">
+        <label for="register-username">Benutzername</label>
+        <input id="register-username" placeholder="Wähle einen Benutzernamen" />
+      </div>
+      <div class="input">
+        <label for="register-password">Passwort</label>
+        <input id="register-password" type="password" placeholder="Mindestens 6 Zeichen" />
+      </div>
+      <div class="input">
+        <label for="register-password-confirm">Passwort bestätigen</label>
+        <input id="register-password-confirm" type="password" placeholder="Passwort wiederholen" />
+      </div>
+      <div class="row mt">
+        <button id="register-btn">Registrieren</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workout starten -->
+  <section id="view-workout" class="view">
+    <div class="card">
+      <h2>Dein Workout</h2>
+      <p>Wähle einen Plan und tracke ihn live.</p>
+      <div class="input">
+        <label for="workout-plan">Trainingsplan</label>
+        <select id="workout-plan"></select>
+      </div>
+      <div class="row mt">
+        <button id="start-workout-btn">Workout starten</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workout Checklist -->
+  <section id="view-workout-checklist" class="view">
+    <div class="card" id="workout-checklist-card" style="display:none;">
+      <div class="row" style="justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div>
+          <div class="tag">Aktiv</div>
+          <h3 id="workout-active-title">Laufendes Workout</h3>
+          <p class="small">Dauer: <span id="workout-timer">00:00</span> Min</p>
+        </div>
+        <div class="row" style="flex-wrap:nowrap;">
+          <button class="secondary" id="cancel-workout-btn">Abbrechen</button>
+          <button id="finish-workout-btn">Beenden</button>
+        </div>
+      </div>
+      <div id="workout-checklist"></div>
+    </div>
+  </section>
+
+  <!-- Trainingspläne -->
+  <section id="view-plans" class="view">
+    <div class="card">
+      <h2>Neuen Plan erstellen</h2>
+
+      <div class="mt">
+        <label for="plan-name">Name des Plans</label>
+        <input id="plan-name" placeholder="z.B. Push Day" />
+      </div>
+
+      <div class="mt-lg">
+        <h3>Übung hinzufügen</h3>
+        <div class="mt">
+          <label for="exercise-name">Übung</label>
+          <input id="exercise-name" placeholder="z.B. Bench Press" />
+        </div>
+        <div class="row mt">
+          <div style="flex: 1;">
+            <label for="exercise-muscle">Muskelgruppe</label>
+            <select id="exercise-muscle">
+              <option value="">Wählen...</option>
+              <option value="Brust">Brust</option>
+              <option value="Rücken">Rücken</option>
+              <option value="Schultern">Schultern</option>
+              <option value="Bizeps">Bizeps</option>
+              <option value="Trizeps">Trizeps</option>
+              <option value="Unterarme">Unterarme</option>
+              <option value="Quadrizeps">Quadrizeps/Vorderer Oberschenkel</option>
+              <option value="Hamstrings">Hamstrings/Hinterer Oberschenkel</option>
+              <option value="Gluteus">Glutes</option>
+              <option value="Adduktoren">Adduktoren</option>
+              <option value="Waden">Waden</option>
+              <option value="Abs">Sixpack</option>
+              <option value="Unterer Rücken">Unterer Rücken</option>
+
+            </select>
+          </div>
+          <div style="flex: 1;">
+            <label for="exercise-weight">Gewicht (kg)</label>
+            <input id="exercise-weight" type="number" min="0" step="0.5" />
+          </div>
+          <div style="flex: 1;">
+            <label for="exercise-reps">Wdh.</label>
+            <input id="exercise-reps" type="number" min="1" step="1" />
+          </div>
+          <div style="flex: 1;">
+            <label for="exercise-sets">Sätze</label>
+            <input id="exercise-sets" type="number" min="1" step="1" />
+          </div>
+        </div>
+        <button class="mt" id="add-exercise">+ Hinzufügen</button>
+      </div>
+
+      <div class="mt-lg">
+        <h3>Übungen im Plan</h3>
+        <ul id="plan-exercise-list" class="list"></ul>
+        <p class="muted small" id="no-exercises">Noch keine Übungen.</p>
+      </div>
+
+      <div class="row mt-lg">
+        <button id="save-plan-btn">Plan speichern</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Deine Pläne</h3>
+      <ul id="plan-list" class="list"></ul>
+      <p class="muted small" id="no-plans">Noch keine Pläne erstellt.</p>
+    </div>
+  </section>
+
+  <!-- Statistiken -->
+  <section id="view-stats" class="view">
+    <div class="card">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Workouts gesamt</div>
+          <div class="stat-value" id="stat-total-workouts">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Gesamtminuten</div>
+          <div class="stat-value" id="stat-total-minutes">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Top-Übung</div>
+          <div class="stat-value" id="stat-top-exercise">—</div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Muskelkarte</h2>
+        <div class="muscle-map-row"></div>
+        <div class="muscle-map">
+          <div id="muscle-chest" class="muscle-overlay"></div>
+          <div id="muscle-shoulder-right" class="muscle-overlay"></div>
+          <div id="muscle-shoulder-left" class="muscle-overlay"></div>
+          <div id="muscle-bizeps-right" class="muscle-overlay"></div>
+          <div id="muscle-bizeps-left" class="muscle-overlay"></div>
+          <div id="muscle-forearm-front-right" class="muscle-overlay"></div>
+          <div id="muscle-forearm-front-left" class="muscle-overlay"></div>
+          <div id="muscle-quads-right" class="muscle-overlay"></div>
+          <div id="muscle-quads-left" class="muscle-overlay"></div>
+
+          <div id="muscle-adductors-right" class="muscle-overlay"></div>
+          <div id="muscle-adductors-left" class="muscle-overlay"></div>
+          <div id="muscle-abs" class="muscle-overlay"></div>
+          <img src="assets/Muscle-Front.png" class="muscle-base" alt="Muskelkarte">
+        </div>
+
+        <div class="muscle-map">
+          <div id="muscle-forearm-back-right" class="muscle-overlay"></div>
+          <div id="muscle-forearm-back-left" class="muscle-overlay"></div>
+          <div id="muscle-hamstrings-right" class="muscle-overlay"></div>
+          <div id="muscle-hamstrings-left" class="muscle-overlay"></div>
+          <div id="muscle-glutes-right" class="muscle-overlay"></div>
+          <div id="muscle-glutes-left" class="muscle-overlay"></div>
+          <div id="muscle-calves-right" class="muscle-overlay"></div>
+          <div id="muscle-calves-left" class="muscle-overlay"></div>
+          <div id="muscle-lowerback" class="muscle-overlay"></div>
+          <div id="muscle-triceps-right" class="muscle-overlay"></div>
+          <div id="muscle-triceps-left" class="muscle-overlay"></div>
+          <div id="muscle-back" class="muscle-overlay"></div>
+          <img src="assets/Muscle-Back.png" class="muscle-base" alt="Back">
+        </div>
+      </div>
+
+      <div class="mt-lg">
+        <h3>Muskelgruppen-Übersicht</h3>
+        <div id="stats-muscles"></div>
+      </div>
+
+      <div class="mt-lg">
+        <h3>Letzte Workouts</h3>
+        <table class="table" id="history-table">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Plan</th>
+              <th>Dauer</th>
+              <th>Sätze</th>
+              <th>Löschen</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p class="muted small" id="no-history-text">Noch keine Workouts.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-spacer" aria-hidden="true"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">ForzaFit</div>
+      <div class="site-footer__meta"> © <span id="footer-year">2026</span> Elio Bucher. Alle Rechte vorbehalten.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/plans.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/workout.js"></script>
+  <script>
+    checkAuth();
+  </script>
+</body>
+
+</html>
